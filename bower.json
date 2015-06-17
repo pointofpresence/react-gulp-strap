@@ -1,0 +1,16 @@
+{
+  "authors": [
+    "Philip Schatz <phil@cnx.org>"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-material-design": "~0.2.2"
+  }
+}

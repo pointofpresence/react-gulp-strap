@@ -9,7 +9,8 @@ var gulp       = require("gulp"),                   // GulpJS
     fs         = require("fs"),                     // fs
     uglify     = require("gulp-uglify"),            // JS min
     buffer     = require("vinyl-buffer"),           // streaming
-    less       = require("gulp-less");              // LESS
+    less       = require("gulp-less"),              // LESS
+    replace    = require("gulp-replace");           // replace
 
 var src         = "./src",
     srcLess     = src + "/less",
@@ -21,8 +22,7 @@ var dist             = "./dist",
     distCss          = dist + "/css",
     distCssApp       = distCss + "/app.css",
     distJs           = dist + "/js",
-    distJsBundleFile = "bundle.js",
-    distJsBundle     = distJs + "/" + distJsBundleFile;
+    distJsBundleFile = "bundle.js";
 
 var pkg = require('./package.json');
 
@@ -36,6 +36,34 @@ var banner = [
     ' */',
     ''
 ].join('\n');
+
+var dateHelper = {
+    /**
+     * @param {Date} d
+     */
+    toUnixTimestamp: function (d) {
+        return Math.floor(d.getTime() / 1000);
+    }
+};
+
+function buildReadme() {
+    gulp.src(src + "/README.md")
+        .pipe(replace("##TITLE##", pkg.title || "Unknown"))
+        .pipe(replace("##NAME##", pkg.name || "Unknown"))
+        .pipe(replace("##DESCRIPTION##", pkg.description || "Unknown"))
+        .pipe(replace("##AUTHOR##", pkg.author || "Unknown"))
+        .pipe(replace("##REPOSITORY##", pkg.repository || "Unknown"))
+        .pipe(replace("##VERSION##", pkg.version || "Unknown"))
+        .pipe(replace("##DATE##", pkg.lastBuildDateUtc || "Unknown"))
+        .pipe(out("./README.md"));
+}
+
+function dateUpdate() {
+    var d = new Date();
+    pkg.lastBuildDate = dateHelper.toUnixTimestamp(d);
+    pkg.lastBuildDateUtc = d.toUTCString();
+    writeJsonFile("./package.json", pkg);
+}
 
 function versionIncrement() {
     var v = (pkg.version || "1.0.0").split(".");
@@ -90,7 +118,9 @@ gulp.task("watch", function () {
 });
 
 gulp.task("build", function () {
+    dateUpdate();
     versionIncrement();
     buildCss();
     buildJs();
+    buildReadme();
 });

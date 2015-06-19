@@ -1,18 +1,19 @@
-var gulp       = require("gulp"),                   // GulpJS
-    mkdirp     = require("mkdirp"),                 // make dir
-    csso       = require("gulp-csso"),              // CSS min
-    header     = require("gulp-header"),            // banner maker
-    out        = require("gulp-out"),               // output to file
-    source     = require("vinyl-source-stream"),    // vinyl objects
-    browserify = require("browserify"),             // Browserify
-    reactify   = require("reactify"),               // Reactify
-    fs         = require("fs"),                     // fs
-    uglify     = require("gulp-uglify"),            // JS min
-    buffer     = require("vinyl-buffer"),           // streaming
-    less       = require("gulp-less"),              // LESS
-    exorcist   = require("exorcist"),
-    gulpif     = require("gulp-if"),
-    replace    = require("gulp-replace");           // replace
+var gulp           = require("gulp"),                   // GulpJS
+    mkdirp         = require("mkdirp"),                 // make dir
+    csso           = require("gulp-csso"),              // CSS min
+    header         = require("gulp-header"),            // banner maker
+    out            = require("gulp-out"),               // output to file
+    source         = require("vinyl-source-stream"),    // vinyl objects
+    browserify     = require("browserify"),             // Browserify
+    reactify       = require("reactify"),               // Reactify
+    fs             = require("fs"),                     // fs
+    uglify         = require("gulp-uglify"),            // JS min
+    buffer         = require("vinyl-buffer"),           // streaming
+    less           = require("gulp-less"),              // LESS
+    exorcist       = require("exorcist"),
+    gulpif         = require("gulp-if"),
+    includeSources = require("gulp-include-source"),
+    replace        = require("gulp-replace");           // replace
 
 var src         = "./src",
     srcLess     = src + "/less",
@@ -69,7 +70,7 @@ function dateUpdate() {
 }
 
 function versionIncrement() {
-    var v = (pkg.version || "1.0.0").split(".");
+    var v = (pkg.version || "0.0.0").split(".");
 
     pkg.version = [
         v[0] ? v[0] : 0,

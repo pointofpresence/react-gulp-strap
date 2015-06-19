@@ -1,7 +1,7 @@
 {
   "title": "ReactGulpStrap",
   "name": "react-gulp-strap",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "pointofpresence",
   "repository": "https://github.com/pointofpresence/react-gulp-strap",
   "description": "React/Gulp/Bootstrap Boilerplate",
@@ -27,6 +27,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {},
-  "lastBuildDate": 1434649464,
-  "lastBuildDateUtc": "Thu, 18 Jun 2015 17:44:24 GMT"
+  "lastBuildDate": 1434689993,
+  "lastBuildDateUtc": "Fri, 19 Jun 2015 04:59:53 GMT"
 }

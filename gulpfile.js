@@ -10,6 +10,8 @@ var gulp       = require("gulp"),                   // GulpJS
     uglify     = require("gulp-uglify"),            // JS min
     buffer     = require("vinyl-buffer"),           // streaming
     less       = require("gulp-less"),              // LESS
+    exorcist   = require("exorcist"),
+    gulpif     = require("gulp-if"),
     replace    = require("gulp-replace");           // replace
 
 var src         = "./src",
@@ -22,7 +24,8 @@ var dist             = "./dist",
     distCss          = dist + "/css",
     distCssApp       = distCss + "/app.css",
     distJs           = dist + "/js",
-    distJsBundleFile = "bundle.js";
+    distJsBundleFile = "bundle.js",
+    distJsBundle     = distJs + "/" + distJsBundleFile;
 
 var pkg = require('./package.json');
 
@@ -96,12 +99,20 @@ function buildCss() {
         .pipe(out(distCssApp));
 }
 
-function buildJs() {
+function buildJs(production) {
+    production = !(typeof(production) === "function" || !production);
+
     mkdirp(distJs);
 
-    browserify(srcJsIndex)
+    //var srcMap = distJsBundle + ".map";
+
+    browserify({
+        entries: srcJsIndex,
+        debug:   !production
+    })
         .transform(reactify)
         .bundle()
+        //.pipe(gulpif(!production, exorcist(srcMap))) // sourcemap
         .pipe(source(distJsBundleFile))
         .pipe(buffer())
         .pipe(uglify())
@@ -121,6 +132,6 @@ gulp.task("build", function () {
     dateUpdate();
     versionIncrement();
     buildCss();
-    buildJs();
+    buildJs(true);
     buildReadme();
 });

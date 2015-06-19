@@ -1,8 +1,8 @@
-# ReactGulpStrap v0.0.3
+# ReactGulpStrap v0.0.4
 ## aka react-gulp-strap
 
 Author: pointofpresence
 
-Last build date: Thu, 18 Jun 2015 17:44:24 GMT
+Last build date: Fri, 19 Jun 2015 04:59:53 GMT
 
 React/Gulp/Bootstrap Boilerplate
